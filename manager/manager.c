@@ -21,6 +21,7 @@ extern pthread_mutex_t mutex_places;
 pthread_t thread_manager;
 
 void init_manager() {
+    // thread du manager
     pthread_create(&thread_manager, NULL, routine_manager, NULL);
     printf("[MANAGER] Initialisation du manager\n");
 }
@@ -29,17 +30,19 @@ void *routine_manager(void *arg) {
     (void) arg;
 
     while (1) {
+        // boucle infini pour surveiller le magasin
         int action_effectuee = 0;
 
-        // vérifier le remplissage des rayons
+        // d'abord on regarde si un rayon est vide, car prioritaire
         for (int i = 0; i < NB_RAYONS_DEFAULT; i++) {
-            pthread_mutex_lock(&rayons_global[i].mutex);
+            pthread_mutex_lock(&rayons_global[i].mutex); // acces protege pour recuperer un stock juste
 
             if (rayons_global[i].stock == 0) {
-
+                // on marque stock a reremplir
                 rayons_global[i].stock = -rayons_global[i].capacite;
                 pthread_mutex_unlock(&rayons_global[i].mutex);
 
+                // recherche d'un employe pour reremplir le rayon
                 for (int j = 0; j < 5; j++) {
                     if (employes[j].mission == AUCUNE) {
                         employes[j].mission = REMPLIR_RAYON;
@@ -48,20 +51,24 @@ void *routine_manager(void *arg) {
                         break;
                     }
                 }
+                // si on a reussi a assigner, on quitte la boucle
                 if (action_effectuee) break;
             } else {
+                // si rayon pas vide, on passe au suivant en debloquant le mutex
                 pthread_mutex_unlock(&rayons_global[i].mutex);
             }
         }
 
-        // vérifier l'encaissement des clients
+        // passer a la verification de clients a encaisser
         if (!action_effectuee && !file_est_vide(&file_attente)) {
+            // on reserve une place en caisse
             pthread_mutex_lock(&mutex_places);
 
             if (places_libres > 0) {
-                places_libres--; // on "réserve" une caisse
+                places_libres--;
                 pthread_mutex_unlock(&mutex_places);
 
+                // on assigne un employe pour encaisser un client
                 for (int i = 0; i < 5; i++) {
                     if (employes[i].mission == AUCUNE) {
                         employes[i].mission = ENCAISSER_CLIENT;
@@ -71,9 +78,10 @@ void *routine_manager(void *arg) {
                     }
                 }
             } else {
+                // si plus de place, on debloque
                 pthread_mutex_unlock(&mutex_places);
             }
         }
-        usleep(100000);
+        usleep(500000); // petite pause
     }
 }

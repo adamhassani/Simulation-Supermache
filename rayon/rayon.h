@@ -12,11 +12,6 @@ typedef enum TypeRayon { // association de type d'article et poids
     LOURD = 8,
 } TypeRayon;
 
-/**
- * Structure representant les rayons. Utilisation d'un enum pour le type d'articles.
- * Les enums sont directement liés aux poids des articles.
- * Mutex pour protéger l'aces aux rayons
- */
 typedef struct Rayon {
     char nom[50];
     char nom_semaphore[64]; // obligatoire sur macos

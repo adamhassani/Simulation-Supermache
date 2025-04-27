@@ -30,17 +30,17 @@ void* routine_superviseur(void* arg) {
 
     while (1) {
         if (!file_est_vide(&file_attente)) {
-            Client* client = premier_client(&file_attente); // 1. Regarder premier client
+            Client* client = premier_client(&file_attente); // regarder premier client
 
-            if (client != NULL && peut_accueillir_client(client)) { // 2. Vérifier si on peut l'accueillir
-                Client* client_retire = retirer_client(&file_attente); // 3. Retirer seulement si OK
+            if (client != NULL && peut_accueillir_client(client)) { // verifier si on peut l'accueillir
+                Client* client_retire = retirer_client(&file_attente); // retirer seulement si OK
 
                 if (client_retire != NULL) {
-                    placer_client(client_retire); // 4. Placer dans une caisse ouverte
+                    placer_client(client_retire); // placer dans une caisse ouverte
                 }
             }
         }
 
-        usleep(100000); // Pause pour ne pas saturer le CPU
+        usleep(500000); // Pause pour ne pas saturer le CPU
     }
 }

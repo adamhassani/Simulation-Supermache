@@ -22,9 +22,6 @@ typedef struct Caisse {
 void init_caisse(Caisse caisses[]);
 
 void afficher_caisse(Caisse caisse);
-// void ajouter_client(Caisse caisse, Client* client);
-// Client* retirer_client(Caisse caisse);
-// int caisse_est_vide(Caisse caisse);
 
 int peut_accueillir_client(Client* client);
 int placer_client(Client* client);

@@ -7,6 +7,7 @@
 
 extern Caisse caisses[NB_CAISSES];
 
+// creation des caisses
 void init_caisse(Caisse caisses[]) {
     for (int i = 0; i < NB_CAISSES; i++) {
         for (int j = 0; j < PLACES_MAX; j++) {
@@ -24,11 +25,13 @@ void afficher_caisses(Caisse caisses[]) {
     }
 }
 
+// fonction permettant de verifier si un client peut passer dans une des caisses en fonction du nnombre de place qu'il prend
 int peut_accueillir_client(Client *client) {
     int places_necessaires = client->priorite;
 
     for (int i = 0; i < NB_CAISSES; i++) {
         pthread_mutex_lock(&caisses[i].mutex);
+        // a chaque caisse on bloque l'acces concurrent pour eviter de recuperer des informations erronees
 
         int places_restantes = PLACES_MAX - caisses[i].places_utilisees;
 
@@ -43,12 +46,14 @@ int peut_accueillir_client(Client *client) {
 
 int placer_client(Client *client) {
     int places_necessaires = client->priorite;
-
-    for (int i = 0; i < NB_CAISSES; i++) {
+    static int last_caisse = 0;
+    for (int k = 0; k < NB_CAISSES; k++) {
+        int i = (last_caisse + k) % NB_CAISSES; // on demarre a la caisse suovante
         pthread_mutex_lock(&caisses[i].mutex);
 
         int places_restantes = PLACES_MAX - caisses[i].places_utilisees;
-        if (places_restantes >= places_necessaires) {
+        if (places_restantes >= places_necessaires) { // assez de placec
+            last_caisse = (i+1) % NB_CAISSES; // on reserve la prochaine caisse
             for (int j = 0; j < places_necessaires; j++) {
                 caisses[i].clients[caisses[i].places_utilisees + j] = client;
             }
@@ -56,11 +61,13 @@ int placer_client(Client *client) {
             caisses[i].places_utilisees += places_necessaires;
             pthread_mutex_unlock(&caisses[i].mutex);
 
-            printf("[CAISSE] Client %d placé dans caisse %d (occupe %d places)\n", client->id, i+1, places_necessaires);
+            printf("[CAISSE] Client %d placé dans caisse %d (occupe %d places)\n", client->id, i + 1,
+                   places_necessaires);
 
             return 1; //client place avec succes
         }
         pthread_mutex_unlock(&caisses[i].mutex);
     }
+
     return 0; //client n'a pas pu etre place
 }

@@ -54,7 +54,7 @@ void *routine_shopping_client(void *arg) {
     c->nb_articles_lourds = 0;
     c->nb_articles_legers = 0;
 
-    // 2) Prendre 1 lourd au début
+    // 2) prendre 1 lourd au début
     while (1) {
         int i = random() % N;
         if (args->rayons[i].type == LOURD) {
@@ -68,9 +68,9 @@ void *routine_shopping_client(void *arg) {
         }
     }
 
-    // 3) Remplir aléatoirement jusqu'à ≥20kg sans dépasser 22kg
+    // 3) remplir aleatoirement jusqu'a poids entre 20 et 22kg (incus)
     while (c->poids_caddie < 20) {
-        // a) Déterminer les types possibles
+        //  types possibles
         TypeRayon possibles[2];
         int count = 0;
         if (c->poids_caddie + LOURD <= 22)
@@ -78,10 +78,10 @@ void *routine_shopping_client(void *arg) {
         if (c->poids_caddie + LEGER <= 22)
             possibles[count++] = LEGER;
 
-        // b) Choisir un type au hasard
+        //  choix du type au hasard
         TypeRayon choix = possibles[random() % count];
 
-        // c) Choisir un rayon de ce type au hasard
+        // choix d'un rayon de ce type au hasard
         int idx;
         while (1) {
             idx = random() % N;
@@ -94,7 +94,7 @@ void *routine_shopping_client(void *arg) {
             }
         }
 
-        // d) Mettre à jour le caddie
+        // maj du caddie
         c->poids_caddie += choix;
         if (choix == LOURD) c->nb_articles_lourds++;
         else c->nb_articles_legers++;

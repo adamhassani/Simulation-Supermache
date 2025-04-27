@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+
+
 extern Caisse caisses[NB_CAISSES];
 extern int NB_RAYONS_DEFAULT;
 extern Rayon* rayons_global;
@@ -114,5 +116,16 @@ void init_employes(Employe employes[]) {
         employes[i].mission = AUCUNE;
         pthread_create(&employes[i].thread, NULL, routine_employe, &employes[i]);
         printf("[EMPLOYE] Initialisation de l'employé %d\n", employes[i].id);
+    }
+}
+
+const char* mission_str(TypeMission m) {
+    switch (m) {
+        case AUCUNE:
+            return "aucune";
+        case ENCAISSER_CLIENT:
+            return "CAISSE";
+        case REMPLIR_RAYON:
+            return "RAYON";
     }
 }

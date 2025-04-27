@@ -8,6 +8,8 @@
 #include <string.h>
 #include <sys/fcntl.h>
 
+
+
 void init_rayons(Rayon rayons[], int nb_rayons_leger, int nb_rayons_lourd) {
     for (int i = 0; i < nb_rayons_leger; i++) {
         sprintf(rayons[i].nom, "Rayon leger %d", i+1);

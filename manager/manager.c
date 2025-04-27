@@ -10,6 +10,8 @@
 #include "../queue/queue.h"
 #include "../employe/employe.h"
 
+
+
 extern FileAttente file_attente;
 extern Employe employes[5];
 extern int NB_RAYONS_DEFAULT;

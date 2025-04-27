@@ -5,6 +5,7 @@
 #include "caisse.h"
 #include <stdio.h>
 
+
 extern Caisse caisses[NB_CAISSES];
 
 void init_caisse(Caisse caisses[]) {

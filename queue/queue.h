@@ -20,5 +20,6 @@ void ajouter_client(FileAttente* file, Client* client);
 Client* retirer_client(FileAttente* file);
 int file_est_vide(FileAttente* file);
 Client* premier_client(FileAttente* file);
+int file_taille(FileAttente* file);
 
 #endif // QUEUE_H

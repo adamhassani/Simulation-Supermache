@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
 void init_file(FileAttente *file) {
     // liste chainee vide
     file->debut = NULL;
@@ -71,4 +73,14 @@ Client *premier_client(FileAttente *file) {
     }
     pthread_mutex_unlock(&file->mutex);
     return client;
+}
+
+int file_taille(FileAttente *file) {
+    pthread_mutex_lock(&file->mutex);
+    int count = 0;
+    for (NodeClient *n = file->debut; n != NULL; n = n->suivant) {
+        count++;
+    }
+    pthread_mutex_unlock(&file->mutex);
+    return count;
 }

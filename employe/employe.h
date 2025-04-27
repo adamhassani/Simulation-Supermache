@@ -23,5 +23,6 @@ typedef struct Employe {
 void init_employes(Employe employes[]);
 
 void* routine_employe(void* arg);
+const char* mission_str(TypeMission m);
 
 #endif //EMPLOYE_H

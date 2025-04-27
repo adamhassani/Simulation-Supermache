@@ -25,18 +25,51 @@ int places_libres = 3;
 pthread_mutex_t mutex_places = PTHREAD_MUTEX_INITIALIZER;
 Caisse caisses[NB_CAISSES];
 
-// Routine d'affichage automatique de l'état des caisses
+void print_dashboard(void) {
+    // 1) Efface l’écran et replace le curseur
+    printf("\033[2J\033[H");
+
+    // 2) En-tête
+    time_t t = time(NULL);
+    printf("=== Supermarché — %s", ctime(&t));
+
+    // 3) Rayons
+    printf("\nRayons :\n");
+    for (int i = 0; i < NB_RAYONS_DEFAULT; i++) {
+        int stock = get_stock_rayon(&rayons_global[i]);
+        printf("  %-15s : %2d articles\n",
+               rayons_global[i].nom, stock);
+    }
+
+    // 4) File d’attente
+    int qlen = file_taille(&file_attente);
+    printf("\nFile d’attente : %d client(s)\n", qlen);
+
+    // 5) Caisses
+    printf("\nCaisses :\n");
+    for (int i = 0; i < NB_CAISSES; i++) {
+        pthread_mutex_lock(&caisses[i].mutex);
+        printf("  Caisse %d : %d/%d places utilisées\n",
+               i+1, caisses[i].places_utilisees, PLACES_MAX);
+        pthread_mutex_unlock(&caisses[i].mutex);
+    }
+
+    // 6) Employés
+    printf("\nEmployés :\n");
+    for (int i = 0; i < 5; i++) {
+        printf("  Employé %d : %s\n",
+               employes[i].id,
+               mission_str(employes[i].mission));
+    }
+
+    fflush(stdout);
+}
+
 void* routine_afficheur(void* arg) {
     (void)arg;
     while (1) {
-        printf("\n========= ÉTAT DES CAISSES =========\n");
-        for (int i = 0; i < NB_CAISSES; i++) {
-            pthread_mutex_lock(&caisses[i].mutex);
-            printf("Caisse %d : %d places utilisées / %d\n", i + 1, caisses[i].places_utilisees, PLACES_MAX);
-            pthread_mutex_unlock(&caisses[i].mutex);
-        }
-        printf("=====================================\n\n");
-        sleep(5); // Toutes les 5 secondes
+        print_dashboard();
+        sleep(1);
     }
 }
 

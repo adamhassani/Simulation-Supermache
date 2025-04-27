@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include "../client/client.h"
 
+
+
 static int client_id = 0; //compteur pour id le client
 
 static int phase_soutenur = 1; // 1 pour soutenu, 0 sinon

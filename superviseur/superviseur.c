@@ -15,6 +15,8 @@
 #include "../caisse/caisse.h"
 
 
+
+
 extern FileAttente file_attente;
 extern Caisse caisses[NB_CAISSES];
 

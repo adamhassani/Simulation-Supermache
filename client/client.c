@@ -10,6 +10,8 @@
 #include "../caisse/caisse.h"
 #include "../queue/queue.h"
 
+
+
 static int client_id = 0;
 extern Rayon *rayons_global;
 extern int NB_RAYONS_DEFAULT;

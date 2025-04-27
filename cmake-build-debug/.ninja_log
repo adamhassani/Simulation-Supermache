@@ -10,3 +10,7 @@
 1	47	1745779905914608865	CMakeFiles/Simulation_Supermache.dir/employe/employe.c.o	a7aed78f0bf74c83
 43	72	1745779905956451350	CMakeFiles/Simulation_Supermache.dir/main.c.o	2366a858ea63d196
 72	99	1745779905985958700	Simulation_Supermache	7505afed87f986ef
+10	139	1745780289271279566	CMakeFiles/Simulation_Supermache.dir/manager/manager.c.o	a278f63943f4a291
+140	224	1745780289401527414	Simulation_Supermache	7505afed87f986ef
+8	141	1745780426295119046	CMakeFiles/Simulation_Supermache.dir/employe/employe.c.o	a7aed78f0bf74c83
+142	220	1745780426428922908	Simulation_Supermache	7505afed87f986ef

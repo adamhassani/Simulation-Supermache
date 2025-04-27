@@ -36,6 +36,8 @@ void *routine_manager(void *arg) {
             pthread_mutex_lock(&rayons_global[i].mutex);
 
             if (rayons_global[i].stock == 0) {
+
+                rayons_global[i].stock = -rayons_global[i].capacite;
                 pthread_mutex_unlock(&rayons_global[i].mutex);
 
                 for (int j = 0; j < 5; j++) {

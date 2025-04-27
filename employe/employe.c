@@ -84,7 +84,7 @@ void *routine_employe(void *arg) {
             for (int i = 0; i < NB_RAYONS_DEFAULT; i++) {
                 pthread_mutex_lock(&rayons_global[i].mutex);
 
-                if (rayons_global[i].stock == 0) {
+                if (rayons_global[i].stock <= 0) {
                     if (rayons_global[i].type == LEGER) {
                         rayons_global[i].stock = 10;
                     } else {

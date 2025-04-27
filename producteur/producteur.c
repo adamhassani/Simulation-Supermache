@@ -25,7 +25,6 @@ void* routine_producteur(void* arg) {
         if (secondes >= 30) {
             secondes = 0;
             phase_soutenur = !phase_soutenur;
-            printf("\n==== CHANGEMENT DE PHASE ====\n---- Phase %s ----\n\n", phase_soutenur ? "Soutenu" : "Detendue");
         }
 
         if (phase_soutenur) {

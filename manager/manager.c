@@ -45,7 +45,6 @@ void *routine_manager(void *arg) {
                 for (int j = 0; j < 5; j++) {
                     if (employes[j].mission == AUCUNE) {
                         employes[j].mission = REMPLIR_RAYON;
-                        printf("[MANAGER] Envoie de l'employé %d remplir %s\n", employes[j].id, rayons_global[i].nom);
                         action_effectuee = 1;
                         break;
                     }
@@ -67,8 +66,6 @@ void *routine_manager(void *arg) {
                 for (int i = 0; i < 5; i++) {
                     if (employes[i].mission == AUCUNE) {
                         employes[i].mission = ENCAISSER_CLIENT;
-                        printf("[MANAGER] Assigne Employé %d pour encaisser un client (ouvre une caisse)\n",
-                               employes[i].id);
                         break;
                     }
                 }

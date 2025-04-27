@@ -32,7 +32,6 @@ Client *routine_creation_client(void) {
 // Parcours du client
 void *routine_arrivee_client(void *arg) {
     Client *client = arg;
-    printf("Client %d arrive -- Priorite => Occupe %d places en caisse\n", client->id, client->priorite);
 
     ShoppingArgs *args = malloc(sizeof(ShoppingArgs));
     args->client = client;
@@ -102,12 +101,6 @@ void *routine_shopping_client(void *arg) {
         else c->nb_articles_legers++;
     }
 
-    // 4) Bilan
-    printf("\n--- Résumé du client %d ---\n", c->id);
-    printf("Poids total du caddie : %d kg\n", c->poids_caddie);
-    printf("Articles lourds pris  : %d\n", c->nb_articles_lourds);
-    printf("Articles légers pris  : %d\n", c->nb_articles_legers);
-    printf("------------------------------\n\n");
 
     ajouter_client(&file_attente, c); // ajouter le client dans la file d'attente
 

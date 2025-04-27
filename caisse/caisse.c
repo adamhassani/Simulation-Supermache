@@ -21,7 +21,6 @@ void init_caisse(Caisse caisses[]) {
 
 void afficher_caisses(Caisse caisses[]) {
     for (int i = 0; i < NB_CAISSES; i++) {
-        printf("[CAISSE] Caisse %d : %d places utilisées\n", i + 1, caisses[i].places_utilisees);
     }
 }
 
@@ -57,7 +56,6 @@ int placer_client(Client *client) {
             caisses[i].places_utilisees += places_necessaires;
             pthread_mutex_unlock(&caisses[i].mutex);
 
-            printf("[CAISSE] Client %d placé dans caisse %d (occupe %d places)\n", client->id, i+1, places_necessaires);
 
             return 1; //client place avec succes
         }

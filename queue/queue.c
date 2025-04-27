@@ -32,8 +32,7 @@ void ajouter_client(FileAttente *file, Client *client) {
 
     pthread_mutex_unlock(&file->mutex);
 
-    printf("[FILE] Client %d ajouté à la file d'attente (Priorité %d - %d kg)\n",
-           client->id, client->priorite, client->poids_caddie);
+
 }
 
 Client *retirer_client(FileAttente *file) {

@@ -28,7 +28,6 @@ void *routine_employe(void *arg) {
         }
 
         if (employe->mission == ENCAISSER_CLIENT) {
-            printf("[EMPLOYE %d] Commence à encaisser un client\n", employe->id);
 
             int client_trouve = 0;
 
@@ -43,7 +42,6 @@ void *routine_employe(void *arg) {
                     // Simuler encaissement
                     sleep(2);
 
-                    printf("[EMPLOYE %d] Client %d encaissé à la caisse %d\n", employe->id, client->id, i + 1);
 
                     // Libérer les places du client
                     for (int p = 0; p < PLACES_MAX; p++) {
@@ -71,7 +69,6 @@ void *routine_employe(void *arg) {
 
             if (!client_trouve) {
                 // Si pas trouvé, attendre un peu
-                printf("[EMPLOYE %d] Aucun client à encaisser pour l'instant\n", employe->id);
                 usleep(500000); // attendre 0,5s
             }
 
@@ -79,7 +76,6 @@ void *routine_employe(void *arg) {
         }
 
         if (employe->mission == REMPLIR_RAYON) {
-            printf("[EMPLOYE %d] Remplissage d'un rayon\n", employe->id);
             sleep(1); // simuler le temps pour remplir
 
             // Remettre du stock dans un rayon
@@ -96,8 +92,6 @@ void *routine_employe(void *arg) {
                     for (int j = 0; j < cap; j++) {
                         sem_post(rayons_global[i].semaphore_stock);
                     }
-                    printf("[EMPLOYE %d] Rayon '%s' re-rempli à %d articles.\n", employe->id, rayons_global[i].nom,
-                           rayons_global[i].stock);
                     pthread_mutex_unlock(&rayons_global[i].mutex);
                     break;
                 }
